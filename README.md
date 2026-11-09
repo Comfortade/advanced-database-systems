@@ -20,7 +20,7 @@ I will use the public Synthea sample CSVs to populate and test the database. The
 
 ## Portfolio Plan
 
-| Activity | Planned work |
+| Activity | Work |
 |---|---|
 | Database design and modelling | Draw an entity-relationship diagram and implement the relational schema in PostgreSQL. |
 | Query processing and optimisation | Retrieve patient visit histories and compare query execution plans before and after adding an index. |
