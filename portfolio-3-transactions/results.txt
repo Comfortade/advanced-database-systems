@@ -1,0 +1,28 @@
+PORTFOLIO 3 — TRANSACTIONS AND CONCURRENCY
+
+Sessions
+Tab A backend PID: 12116
+Tab B backend PID: 14492
+
+1. Isolation — before commit
+Tab B checked the clinician's 09:00 slot on 2030-06-02
+while Tab A's booking was uncommitted.
+Rows returned: [enter the count you saw]
+
+2. Concurrent booking attempt
+Tab B tried to book the same clinician and start time
+using a different appointment ID.
+
+ERROR: duplicate key value violates unique constraint
+"appointments_one_booked_slot_idx"
+SQL state: 23505
+Conflicting start time: 2030-06-02 09:00:00+01
+
+3. After commit
+Tab B checked the 09:00 slot again.
+[paste the row returned by your SELECT]
+
+4. After rollback
+Test appointment: 00000000-0000-4000-8000-000000000043
+Test slot: 2030-06-02 10:00:00+01
+booking_exists: 0
