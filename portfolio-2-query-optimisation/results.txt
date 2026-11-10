@@ -1,0 +1,9 @@
+PORTFOLIO 2 — QUERY RESULT
+
+Benchmark table size: 50,002 encounters
+Patient ID: 1d670d3c-f290-52f4-9409-aaffd1eb59f5
+Rows returned: 2
+
+encounter_id                         | started_at
+1d670d3c-f290-52f4-0e3e-9d6c26ad814e | 2021-10-13 05:27:13+01
+1d670d3c-f290-52f4-1711-0c028dd5cf58 | 2021-11-03 05:27:13+01
