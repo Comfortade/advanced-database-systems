@@ -73,3 +73,25 @@ same pgAdmin Query Tool tab. Capture the first execution plan before running
 - [Before-index execution plan](portfolio-2-query-optimisation/before-index.png)
 - [After-index execution plan](portfolio-2-query-optimisation/after-index.png)
 
+### Portfolio 3: Transactions and Concurrency
+
+I used two PostgreSQL sessions to simulate two staff members trying to
+book the same clinician for the 09:00 slot on 2 June 2030. A partial unique
+index enforces one appointment with status `booked` per clinician and
+scheduled start time.
+
+Session A inserted a booking inside a transaction. Session B checked the
+slot before A committed, then attempted to book the same slot with a
+different appointment ID. After A committed, PostgreSQL rejected B's insert
+with SQL state `23505`. The error named `appointments_one_booked_slot_idx`,
+showing that the conflict was on the clinician and start time.
+
+I tested rollback separately by inserting a 10:00 appointment and rolling
+back the transaction. The verification query returned `booking_exists = 0`.
+
+To reproduce the experiment, load the Portfolio 1 schema and sample data
+into a fresh database. Open two pgAdmin Query Tool tabs and run each
+numbered block in `booking_test.sql` in the indicated tab.
+
+- [Booking test SQL](portfolio-3-transactions/booking_test.sql)
+- [Observed results](portfolio-3-transactions/results.txt)
