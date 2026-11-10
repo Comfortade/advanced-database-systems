@@ -18,12 +18,58 @@ I will use the public Synthea sample CSVs to populate and test the database. The
 
 [Synthea sample data](https://synthetichealth.github.io/downloads.html)
 
-## Portfolio Plan
+### Portfolio 1: Database Design and Modelling
 
-| Activity | Work |
-|---|---|
-| Database design and modelling | Draw an entity-relationship diagram and implement the relational schema in PostgreSQL. |
-| Query processing and optimisation | Retrieve patient visit histories and compare query execution plans before and after adding an index. |
-| Transactions and concurrency | Use two database sessions to test whether the system prevents a doctor from being double-booked. |
-| NoSQL and advanced data models | Model an outpatient encounter and its related clinical details as a document. |
-| Distributed and cloud databases | Explain how a primary database and a replica could support the clinic and how replication delays could affect appointment availability. |
+I designed and implemented a PostgreSQL database for the outpatient
+department of Comfort Private Hospital. The schema has seven tables:
+patients, providers, appointments, encounters, diagnoses, prescriptions,
+and lab tests.
+
+Appointments represent scheduled bookings, while encounters represent
+visits that took place. Patient details are stored once in the patients
+table. Each encounter uses a patient ID to link to that record.
+
+I loaded one synthetic Synthea patient, one clinician, and two outpatient
+encounters. A verification query joined the patients and encounters tables
+and returned both visits for the same patient.
+
+To reproduce the test, run `01_schema.sql`, `02_sample_data.sql`, and
+`03_verify_design.sql` in that order in a fresh PostgreSQL database.
+
+- [Entity-relationship diagram](portfolio-1-database-design/er-diagram.png)
+- [Design and normalisation notes](portfolio-1-database-design/design-notes.md)
+- [Database schema](portfolio-1-database-design/01_schema.sql)
+- [Sample data](portfolio-1-database-design/02_sample_data.sql)
+- [Verification query](portfolio-1-database-design/03_verify_design.sql)
+
+### Portfolio 2: Query Processing and Optimisation
+
+I tested how PostgreSQL retrieves one patient's encounters in chronological
+order. The temporary benchmark table contained the two outpatient encounters
+from Portfolio 1 and 50,000 generated encounters. I ran the same query before
+and after adding an index on `(patient_id, started_at)`.
+
+| Measure | Before indexing | After indexing |
+|---|---|---|
+| Scan method | Sequential scan | Bitmap Index Scan followed by Bitmap Heap Scan |
+| Separate sort by visit start time | Yes | Yes |
+| Actual rows returned | 2 | 2 |
+| Execution time | 10.507 ms | 3.015 ms |
+| Planning time | 0.184 ms | 61.582 ms |
+
+Before indexing, PostgreSQL scanned the table and filtered out 50,000 rows.
+After indexing, it used the index to locate the matching rows and still
+sorted the two results by visit start time. Execution time fell by about
+71% in this comparison, while planning time increased. These measurements
+come from one run per condition.
+
+To reproduce the comparison, load the Portfolio 1 schema and sample data.
+Then run the blocks in `benchmark.sql` in order, one block at a time, in the
+same pgAdmin Query Tool tab. Capture the first execution plan before running
+`CREATE INDEX`.
+
+- [Benchmark SQL](portfolio-2-query-optimisation/benchmark.sql)
+- [Query results](portfolio-2-query-optimisation/results.txt)
+- [Before-index execution plan](portfolio-2-query-optimisation/before-index.png)
+- [After-index execution plan](portfolio-2-query-optimisation/after-index.png)
+
