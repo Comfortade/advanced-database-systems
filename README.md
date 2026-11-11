@@ -95,3 +95,25 @@ numbered block in `booking_test.sql` in the indicated tab.
 
 - [Booking test SQL](portfolio-3-transactions/booking_test.sql)
 - [Observed results](portfolio-3-transactions/results.txt)
+
+### Portfolio 4 — NoSQL and Advanced Data Models
+
+I converted 855 outpatient encounters from the Synthea sample CSVs into
+MongoDB documents and bulk-imported them into Atlas. The conversion
+matched conditions, medications, and laboratory observations to each
+visit using its encounter ID.
+
+Each document embeds diagnoses, prescriptions, and lab results so the
+details of a visit can be retrieved together. Patient and provider IDs
+are stored on the encounter because the same patient or provider can
+appear across multiple visits.
+
+The query evidence records the successful bulk import, a lookup by
+encounter ID, and a patient-history filter sorted by visit date. The
+generated data contains five outpatient visits for the example patient.
+The evidence also includes the compound index definition for filtering
+by patient ID and sorting visits newest first.
+
+- [Conversion script](portfolio-4-nosql/build_encounters.py)
+- [Example encounter document](portfolio-4-nosql/encounter.json)
+- [Import and query evidence](portfolio-4-nosql/queries.txt)
