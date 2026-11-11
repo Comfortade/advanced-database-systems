@@ -17,7 +17,7 @@ Expected result verified against the import file:
 Filter: { "patientId": "815ff645-c396-834b-d0ee-0620a11710cf" }
 Sort: { "startedAt": -1 }
 result verified against the import file:
-5 outpatient encounters, newest first.
+As observed in Atlas, 5 outpatient encounters, newest first.
 
 Visit start (UTC)     | Encounter ID
 2024-01-31T20:13:13Z  | 815ff645-c396-834b-7e47-0da1508ae897
@@ -30,3 +30,4 @@ Visit start (UTC)     | Encounter ID
 Compound index keys: { "patientId": 1, "startedAt": -1 }
 The first key supports filtering by patient ID. The second supports
 ordering that patient's encounters from newest to oldest.
+
