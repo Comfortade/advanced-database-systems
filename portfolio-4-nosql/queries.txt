@@ -1,0 +1,32 @@
+PORTFOLIO 4 — MONGODB IMPORT AND QUERY CHECKS
+
+Database: comfort_hospital_nosql
+Collection: encounters
+Data source: Synthea sample CSVs, encounters labelled outpatient
+
+1. BULK IMPORT
+855 documents imported successfully into MongoDB Atlas.
+Import mode: upsert by _id.
+
+2. SINGLE ENCOUNTER LOOKUP
+Filter: { "_id": "815ff645-c396-834b-7e47-0da1508ae897" }
+Expected result verified against the import file:
+1 encounter with 2 diagnoses, 1 prescription, and 1 laboratory result.
+
+3. PATIENT ENCOUNTER HISTORY
+Filter: { "patientId": "815ff645-c396-834b-d0ee-0620a11710cf" }
+Sort: { "startedAt": -1 }
+result verified against the import file:
+5 outpatient encounters, newest first.
+
+Visit start (UTC)     | Encounter ID
+2024-01-31T20:13:13Z  | 815ff645-c396-834b-7e47-0da1508ae897
+2021-06-21T20:13:13Z  | 815ff645-c396-834b-1a61-291150f1a9cc
+2021-05-24T20:13:13Z  | 815ff645-c396-834b-5d14-d867da6f1b87
+2020-12-20T20:13:13Z  | 815ff645-c396-834b-a506-a202fd0c0e27
+2020-02-10T20:13:13Z  | 815ff645-c396-834b-a5c9-a9d73d3c9eee
+
+4. PATIENT HISTORY INDEX
+Compound index keys: { "patientId": 1, "startedAt": -1 }
+The first key supports filtering by patient ID. The second supports
+ordering that patient's encounters from newest to oldest.
