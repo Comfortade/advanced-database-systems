@@ -1,0 +1,25 @@
+{
+  "_id": "815ff645-c396-834b-7e47-0da1508ae897",
+  "encounterType": "outpatient",
+  "startedAt": { "$date": "2024-01-31T20:13:13Z" },
+  "patientId": "815ff645-c396-834b-d0ee-0620a11710cf",
+  "providerId": "95297f4b-251f-3000-a02d-e7bcc7924a74",
+  "diagnoses": [
+    { "code": "82423001", "description": "Chronic pain (finding)" },
+    { "code": "278860009", "description": "Chronic low back pain (finding)" }
+  ],
+  "prescriptions": [
+    {
+      "code": "209387",
+      "medicationName": "Acetaminophen 325 MG Oral Tablet [Tylenol]"
+    }
+  ],
+  "labTests": [
+    {
+      "code": "65750-2",
+      "testName": "Drugs of abuse 5 panel - Urine by Screen method",
+      "result": "Negative (qualifier value)",
+      "units": "n/a"
+    }
+  ]
+}
