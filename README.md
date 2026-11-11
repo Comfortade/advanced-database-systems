@@ -117,3 +117,12 @@ by patient ID and sorting visits newest first.
 - [Conversion script](portfolio-4-nosql/build_encounters.py)
 - [Example encounter document](portfolio-4-nosql/encounter.json)
 - [Import and query evidence](portfolio-4-nosql/queries.txt)
+
+### Portfolio 5 — Distributed and Cloud Database Exercise
+
+I proposed a PostgreSQL primary and standby for Comfort Private Hospital.
+Using the 9 a.m. booking scenario from Portfolio 3, I explain how replication
+lag could affect appointment availability, why bookings go to the primary,
+and what could happen to a recent booking during failover.
+
+- [Replication and failover discussion](portfolio-5-distributed-cloud/replication-design.md)
